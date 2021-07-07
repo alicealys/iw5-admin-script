@@ -1,6 +1,15 @@
 local json = require("json")
 local sqlite = require("sqlite")
 
+require("commands")
+
+if (not io.fileexists(scriptdir() .. "/cfg/config.json")) then
+    print("Config file not found")
+    return
+end
+
+local config = json.decode(io.readfile(scriptdir() .. "/cfg/config.json"))
+
 function tablelength(t)
     local count = 0
     for k, v in pairs(t) do
@@ -62,7 +71,7 @@ function getlocation(address, callback)
     end, true)
 end
 
-local conn = sqlite.connect("http://localhost:8000/query", "deeznutz")
+local conn = sqlite.connect(config.database.url, config.database.password)
 local models = {}
 
 local list = io.listfiles(scriptdir() .. "./models")
@@ -72,8 +81,6 @@ for i = 1, #list do
 
     models[filename] = require("models/" .. filename)(conn)
 end
-
-require("commands")
 
 function findplayer(condition)
     local players = game:getentarray("player", "classname")
@@ -157,6 +164,10 @@ function entity:getplayerinstance(callback)
             callback(result[1])
         end
     end)
+end
+
+function entity:kick(reason)
+    game:executecommand("clientkick " .. self:getentitynumber() .. "\"" .. reason .. "\"")
 end
 
 level:onnotify("connected", function(player)
