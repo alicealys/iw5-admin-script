@@ -1,4 +1,8 @@
 {
+    "database": {
+        "password": null,
+        "url": "http://localhost:8000/query"
+    },
     "levels": [
         {
             "name": "User",

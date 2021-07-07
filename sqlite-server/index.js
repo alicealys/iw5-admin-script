@@ -4,11 +4,17 @@ const Sequelize = require('sequelize')
 const http      = require('http')
 const express   = require('express')
 const app       = express()
+const config    = require('./config.json')
+
+if (!config.password) {
+    console.log('Password not specified in config. Aborting')
+    process.exit(0)
+}
 
 const hostname = "127.0.0.1"
-const port = 8000
 
-const password = 'deeznutz'
+const port = config.port
+const password = config.password
 
 const server = http.createServer(app)
 
