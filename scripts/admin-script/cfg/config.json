@@ -1,0 +1,24 @@
+{
+    "levels": [
+        {
+            "name": "User",
+            "level": 0
+        },
+        {
+            "name": "VIP",
+            "level": 1
+        },
+        {
+            "name": "Moderator",
+            "level": 2
+        },
+        {
+            "name": "Admin",
+            "level": 3
+        },
+        {
+            "name": "Owner",
+            "level": 10
+        }
+    ]
+}
